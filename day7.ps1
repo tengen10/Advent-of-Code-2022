@@ -1,25 +1,19 @@
 ﻿# Day 7: No Space Left On Device 
 
-# /dir1/dir2/dir3
-# /dir1/dir2/dir1
-
-# Decided to use the file system 
+# Used the file system instead of creating a tree structure
 # Interpreted the input as commands to create the files and folders
 # Then used get-childitem and measure-object
 
-function New-EmptyFile
-{
-   param( [string]$FilePath,[double]$Size )
-
-   $file = [System.IO.File]::Create($FilePath)
-   $file.SetLength($Size)
-   $file.Close()
-}
+##
+# Part 1
+##
 
 $data = Get-Content input.txt
 $data = $data -replace '/', '.'
 
 $basepath = Get-Location
+
+New-Item -ItemType Directory -Name "root"
 
 Set-Location -Path .\root
 
@@ -39,7 +33,6 @@ for ($x=0; $x-lt $data.Length; $x++) {
              }
          }
 
-
       if ($line[0] -ne '$') { 
           $line -join ","
           if ($line[0] -eq 'dir') { 
@@ -47,7 +40,10 @@ for ($x=0; $x-lt $data.Length; $x++) {
           } else {
             $fullpath = $(get-location).Path + "\" + $line[1]
             $filesize = $line[0]
-            New-EmptyFile -FilePath $fullpath -Size $filesize
+            $file = [System.IO.File]::Create($fullpath)
+            $file.SetLength($filesize)
+            $file.Close()
+            #New-EmptyFile -FilePath $fullpath -Size $filesize
           }
      }      
 } 
@@ -90,5 +86,9 @@ foreach ($folder in $folderlist) {
         if ($foldersize -lt $currentlow) { $currentlow = $foldersize; "current low {0}:{1}" -f $currentlow, $folder.fullname}  
     }
 }
+
+
+
+
 
 
