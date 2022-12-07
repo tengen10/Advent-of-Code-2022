@@ -43,7 +43,6 @@ for ($x=0; $x-lt $data.Length; $x++) {
             $file = [System.IO.File]::Create($fullpath)
             $file.SetLength($filesize)
             $file.Close()
-            #New-EmptyFile -FilePath $fullpath -Size $filesize
           }
      }      
 } 
