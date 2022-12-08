@@ -8,9 +8,7 @@ $in = Get-Content .\input.txt
 $grid = new-object "system.collections.arraylist"
 
 foreach ($row in $in) {
-
     [void]$grid.add($row.ToCharArray())
-
 }
 
 $rows = $grid.Count
@@ -92,14 +90,11 @@ for ($i = 1; $i -lt $rows-1; $i++) {
         #right
          [bool]$stop = $false
         for ($r = $j+1; $r -lt $cols -and -not($stop); $r++) { $tree = $grid[$i][$r];  $right += 1; if ($tree -ge $n) {$stop =$true} }
-         
-        
-       
+           
         $scenicscore = $up * $down * $left * $right 
          "scores: {0}:{1}:{2}:{3}: total:{4}" -f $up, $down , $left , $right, $scenicscore
      
-        if ($scenicscore -gt $highscore) { $highscore = $scenicscore }
-
+        if ($scenicscore -gt $highscore) { $highscore = $scenicscore 
     }
 }
 
